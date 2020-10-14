@@ -1,0 +1,190 @@
+
+
+
+.top {
+ -fx-background-color : #1d2a57;
+
+}
+
+.main-top {
+ -fx-background-color: #2b2e61;
+}
+
+.main-top .label-main {
+
+  -fx-font-size: 20;
+  -fx-text-fill: white;
+  -fx-font-family: Arial,Helvetica,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+
+}
+
+.main-top .search-main {
+
+ -fx-background-radius: 20px;
+
+}
+
+.button-search{
+
+  -fx-background-radius: 100%;
+  -fx-background-color: #fec400;
+  -fx-background-image: url('/image/search_50px.png');
+  -fx-background-size: 30px;
+  -fx-background-position: center;
+  -fx-background-repeat: no-repeat;
+}
+
+.button-search:hover {
+  -fx-background-color: #fec400c4;
+
+}
+
+.footer {
+
+ -fx-background-color: #1d2a57;
+ -fx-text-fill : white;
+ -fx-font-size : 16;
+ -fx-font-family: Arial,Helvetica,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+
+}
+
+/*   ------------------------------------------------------  -------------------------------- */
+
+.label-your-word {
+   -fx-font-size : 25;
+   -fx-font-family: Arial,Helvetica,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+   -fx-font-weight : bolder;
+}
+
+.pane-content{
+
+ -fx-border-width : 1px;
+ -fx-border-color : #c8c8c8;
+}
+
+.content-body-1 {
+
+   -fx-font-family: Arial,Helvetica,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+   -fx-font-size : 19px;
+
+   -fx-border-color :  #c8c8c8;
+}
+
+.content-body-2 {
+
+   -fx-font-family: Arial,Helvetica,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+   -fx-font-size : 19px;
+
+   -fx-border-color :  #f4f4f4;
+
+}
+
+.label1-your-word {
+  -fx-font-size : 22px;
+  -fx-font-weight : bold;
+  -fx-font-family: Arial,Helvetica,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  -fx-text-fill : #5186d5;
+}
+
+.label2-your-word {
+  -fx-font-family: Arial,Helvetica,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  -fx-font-size : 18px;
+  -fx-font-weight : bolder;
+}
+
+.button-star{
+   -fx-background-position: center;
+   -fx-background-repeat : no-repeat;
+   -fx-background-color : #f4f4f4;
+}
+
+.button-guess-word{
+  -fx-font-size : 19px;
+  -fx-font-weight : bold;
+  -fx-font-family: Arial;
+  -fx-border-width : 0 0 1 0;
+  -fx-border-color : gray;
+}
+
+.button-guess-word:hover {
+  -fx-background-color: #ccc;
+
+}
+
+.vbox-word {
+  -fx-border-width : 0 0 1 0;
+  -fx-border-color : gray;
+}
+
+.vbox-word:hover{
+ -fx-background-color: #ccc;
+}
+
+/*  -----------------------------------------------------------------------------  -------------------------- */
+
+.button-menu:hover {
+
+  -fx-background-color : #7794e9;
+
+}
+
+.button-menu{
+
+     -fx-font-size : 19px;
+     -fx-font-family: Arial,Helvetica,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+     -fx-font-weight : bold;
+
+}
+
+
+
+
+/* ----------------------------------------------------------------------------------- */
+
+
+.list-cell, .list-cell::focused {
+    -fx-border-radius: 20;
+}
+.list-view .button {
+
+   -fx-background-color: #292d5f;
+   -fx-text-fill : white;
+   -fx-font-family: Arial,Helvetica,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+   -fx-font-size : 21px;
+
+
+}
+.list-view .button:hover {
+
+   -fx-background-color: #464da5;
+
+}
+
+.list-view {
+
+   /*
+    -fx-hgap: 20px;
+       -fx-padding: 40px;
+
+   */
+       -fx-background-color: #2b2e61;
+       -fx-background-radius: 30px;
+
+       -fx-border-radius: 30px;
+       -fx-border-width: 5px;
+       -fx-border-color: #2b2e61;
+
+
+}
+
+
+
+
+.list-view .scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
+
+.list-view .scroll-bar:horizon {
+    -fx-scale-y: 0;
+}
+
