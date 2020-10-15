@@ -36,19 +36,19 @@
                         <Insets bottom="10.0" left="5.0" top="10.0" />
                      </padding>
                      <content>
-                        <HBox fx:id="hbox" prefHeight="111.0" prefWidth="469.0" spacing="30.0">
+                        <HBox fx:id="hbox" prefHeight="111.0" prefWidth="466.0" spacing="30.0">
                            <children>
                               <Button fx:id="button_star" mnemonicParsing="false" prefHeight="37.0" prefWidth="37.0" styleClass="button-star" stylesheets="@style.css">
                                  <cursor>
                                     <Cursor fx:constant="OPEN_HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="button_remove" layoutX="10.0" layoutY="30.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="37.0" styleClass="button-star" stylesheets="@style.css">
+                              <Button fx:id="button_remove" layoutY="30.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="37.0" styleClass="button-star" stylesheets="@style.css">
                                  <cursor>
                                     <Cursor fx:constant="OPEN_HAND" />
                                  </cursor>
                                  <HBox.margin>
-                                    <Insets left="260.0" />
+                                    <Insets left="240.0" />
                                  </HBox.margin>
                               </Button>
                               <Button fx:id="button_reword" mnemonicParsing="false" prefHeight="37.0" prefWidth="37.0" styleClass="button-star" stylesheets="@style.css">
@@ -166,6 +166,6 @@
                 </ImageView>
             </children>
         </AnchorPane>
-      <JFXDrawer fx:id="drawerShow" defaultDrawerSize="226.0" layoutY="101.0" prefHeight="656.0" prefWidth="226.0" />
+      <JFXDrawer fx:id="drawerShow" defaultDrawerSize="226.0" layoutY="84.0" prefHeight="667.0" prefWidth="226.0" />
     </children>
 </AnchorPane>

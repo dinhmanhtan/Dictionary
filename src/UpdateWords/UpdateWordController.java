@@ -38,30 +38,13 @@ public class UpdateWordController implements Initializable {
     private JFXButton buttonCancel;
 
     @FXML
-    void CancelChanged(ActionEvent event) {
+
+
+   public void CancelChanged(ActionEvent event) {
 
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
 
     }
-
-//    @FXML
-//    void  saveChanged(ActionEvent event) {
-//
-//        if( !keyWord.getText().isEmpty() && !meaning.getText().isEmpty()) {
-//
-//            ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
-//        } else  {
-//
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setHeaderText(null);
-//            alert.setContentText("You need to fill out all information");
-//            alert.Show();
-//        }
-//    }
-
-
-
-
 
 
     public void setWord(String Word, String Meaning) {
@@ -73,12 +56,13 @@ public class UpdateWordController implements Initializable {
 
     public void Save(Text w, Text m) {
 
-
+        keyWord.setText("");
+        meaning.setText("");
 
         buttonSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if( !keyWord.getText().isEmpty() && !meaning.getText().isEmpty()) {
+                if( !keyWord.getText().isEmpty() && !meaning.getText().isEmpty() ) {
 
                     // Lấy dữ liệu nhập ràng buộc cho tham chiếu
                      w.textProperty().bind(keyWord.textProperty());
@@ -112,6 +96,7 @@ public class UpdateWordController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
 
       String s = getWord();
     }

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class DictionaryManagement extends Dictionary {
 
-  public   Map<String,Boolean> yourWords = new HashMap<>();
+  public   Map<String,Boolean> yourWords = new LinkedHashMap<>();
 
 
     /**

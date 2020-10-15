@@ -1,11 +1,12 @@
 package Dictionary;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Dictionary {
 
-   public Map<String, Word> dictionary = new HashMap<>();
+   public Map<String, Word> dictionary = new LinkedHashMap<>();
 
    public void  Put(String key,String pronunc, String full_meaning, String short_meaning) {
 

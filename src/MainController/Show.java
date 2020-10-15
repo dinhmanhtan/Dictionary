@@ -175,13 +175,14 @@ public class Show implements Initializable {
 
     public void InitContent(String input) {
 
+
         String meaning = dic.Lookup(input);
 
         ScrollContent.setLayoutY(3);
         ScrollContent.setPrefHeight(483);
         ScrollContent.getStyleClass().remove("content-body-2");
         ScrollContent.getStyleClass().add("content-body-1");
-        ScrollContent.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        ScrollContent.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
         paneContent.getStyleClass().remove("pane-content");
 
@@ -208,6 +209,7 @@ public class Show implements Initializable {
 
         if(dic.dictionary.containsKey(input) ) {
 
+            dic.WriteDataToFile(input,"File/RecentWords.txt");
 
             button_star.setStyle("-fx-background-image: url('image/star_48px.png')");
             button_star.setDisable(false);
@@ -322,12 +324,12 @@ public class Show implements Initializable {
         window.setResizable(false);
         window.initStyle(StageStyle.DECORATED);
 
-        window.showAndWait();
+        window.show();
 
         String w = textWord.getText();
         String m = textMeaning.getText();
         String wordToFile = "@" + w + '\n' + m;
-        if( !w.isEmpty() && !m.isEmpty())  {
+        if( !w.isEmpty() && !m.isEmpty() )  {
 
            if( message.equals("reword")) {
 
@@ -536,18 +538,7 @@ public class Show implements Initializable {
          btn_yourWords = anchorPane.getChildren().get(2);
          btn_recentWords = anchorPane.getChildren().get(3);
          btn_addWords = anchorPane.getChildren().get(4);
-
-         btn_recentWords.setOnMouseClicked(event -> {
-            InitContent("recent");
-
-            inputSearch.setText(null);
-            drawerShow.setDisable(true);
-            drawerShow.close();
-            inputSearch.setDisable(false);
-
-             transition.setRate(transition.getRate() * -1);
-             transition.play();
-        });
+         Node btn_exit = anchorPane.getChildren().get(5);
 
          btn_yourWords.setOnMouseClicked(event -> {
 
@@ -557,13 +548,26 @@ public class Show implements Initializable {
              paneContent.getStyleClass().add("pane-content");
 
              label_content.setText("Your words");
-             ListChoseYourWord(); });
+             ListChoseYour_Recent_Word("your word"); });
 
 
         /*
          *   Hiện menu bar khi nhấn Hamburger
          */
 
+        btn_recentWords.setOnMouseClicked(event -> {
+
+            ScrollContent.setLayoutY(70);
+            ScrollContent.setPrefHeight(415);
+            ScrollContent.getStyleClass().add("content-body-2");
+            paneContent.getStyleClass().add("pane-content");
+
+            label_content.setText("Recent words");
+            ListChoseYour_Recent_Word("recent word");
+        });
+
+        btn_exit.setOnMouseClicked(event ->
+                ((Stage)(((Button)event.getSource()).getScene().getWindow())).close());
 
         hamburgerShow.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
             transition.setRate(transition.getRate() * -1);
@@ -698,6 +702,8 @@ public class Show implements Initializable {
 
                       InitContent(button.getText());
                       inputSearch.setText(button.getText());
+
+
                   }
               }
           });
@@ -706,9 +712,21 @@ public class Show implements Initializable {
 
   }
 
-  public void ListChoseYourWord() {
+    /**
+     *  Lấy dữ liệu và khởi tạo cho phần YourWords hoặc RecentWords
+     * @param message  "your word" hoặc "recent word"
+     */
+  public void ListChoseYour_Recent_Word(String message) {
 
-      List<String> list = dic.ListYourWord();
+      List<String> list = new ArrayList<>();
+
+      if(message.equals("your word") )
+          list = dic.ListYourWord();
+      else if(message.equals("recent word")) {
+          list = dic.GetDataFromFile("File/RecentWords.txt");
+
+          Collections.reverse(list);
+      }
 
       label_content.setStyle("-fx-font-szie: 25");
       listChoseYourWord = new VBox(20);
@@ -770,7 +788,18 @@ public class Show implements Initializable {
 
   }
 
+    /**
+     *  Lấy danh sách các từ phỏng đoán key và khởi tạo nội dung hiển thị
+     * @param key  từ gõ sai
+     */
   public void ListOfGuessWords(String key) {
+
+      int counter =0;
+      for(int i=0; i<key.length(); i++) {
+          if(key.charAt(i) == ' ')
+              counter ++;
+      }
+      if (counter == key.length()) return;
 
       ScrollContent.setLayoutY(70);
       ScrollContent.setPrefHeight(415);
