@@ -1,5 +1,6 @@
 package UpdateWords;
 
+import Dictionary.Dictionary;
 import Dictionary.DictionaryManagement;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
@@ -10,18 +11,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+
+import Dictionary.*;
 
 public class UpdateWordController implements Initializable {
 
@@ -54,10 +52,9 @@ public class UpdateWordController implements Initializable {
     }
 
 
-    public void Save(Text w, Text m) {
+    public void Save(Text w, Text m, DictionaryManagement dic, Text replace) {
 
-        keyWord.setText("");
-        meaning.setText("");
+
 
         buttonSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -68,13 +65,35 @@ public class UpdateWordController implements Initializable {
                      w.textProperty().bind(keyWord.textProperty());
                      m.textProperty().bind(meaning.textProperty());
 
-                    ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                     if(dic.dictionary.containsKey(keyWord.getText())) {
+                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+                         alert.setTitle("Warring");
+                         alert.setContentText("Do you want replace this ?");
+                         alert.setHeaderText("This has already on Dictionary");
+
+                         ButtonType buttonTypeYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                         ButtonType buttonTypeNo = new ButtonType("No", ButtonBar.ButtonData.NO);
+                         alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                         Optional<ButtonType> result = alert.showAndWait();
+
+                         if (result.get().getButtonData() == ButtonBar.ButtonData.YES) {
+                                 replace.setText("yes");
+                               ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+
+                         } else if (result.get().getButtonData() == ButtonBar.ButtonData.NO)
+                                 replace.setText("no");
+
+
+                     } else
+
+                       ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
                 } else  {
 
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setHeaderText(null);
                     alert.setContentText("You need to fill out all information");
-                    alert.show();
+                    alert.showAndWait();
                 }
             }
         });
@@ -86,9 +105,6 @@ public class UpdateWordController implements Initializable {
         Label label = new Label();
 
         label.textProperty().bind(keyWord.textProperty());
-
-
-
 
         return  label.getText();
     }

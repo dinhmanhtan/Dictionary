@@ -35,14 +35,16 @@ public class DictionaryManagement extends Dictionary {
         String eng = "";
         String pronunc = "";
 
-        if( !ChangedWords)
+        if( !ChangedWords) {
             full_meaing = line + '\n' + '\n';
+            eng = "a";
+            pronunc = "/ei, ə/";
+        } else {
+            String[] str = line.split("\\@");
 
-        String[] str = line.split("\\@");
-
-        for(int i=0; i<str.length ; i++)
-             eng += str[i];
-
+            for (int i = 0; i < str.length; i++)
+                eng += str[i];
+        }
 
         while (scanner.hasNext()) {
 
@@ -153,11 +155,23 @@ public class DictionaryManagement extends Dictionary {
     }
 
     // Viết vào file
-    public void WriteDataToFile(String word, String path) {
+    public void WriteDataToFile(String word, String path,String message) {
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
 
-            bw.write(word + '\n');
+
+           if( message.equals("recent")) {
+               List<String> list = GetDataFromFile(path);
+
+               if(!list.contains(word))
+                 bw.write(word + '\n');
+               else {
+                   DeleteDataFromFile(word,path);
+                   bw.write(word + '\n');
+               }
+           } else
+               bw.write(word + '\n');
+
             // không cần đóng BufferedWriter (nó đã tự động đóng)
             // bw.close();
 
@@ -181,8 +195,8 @@ public class DictionaryManagement extends Dictionary {
             e.printStackTrace();
         }
 
-
-        list.remove(word);
+        System.out.println(word + " " + path);
+            list.remove(word);
 
 
         for(String s : list) {

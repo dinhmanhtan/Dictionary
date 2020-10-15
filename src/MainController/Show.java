@@ -209,7 +209,7 @@ public class Show implements Initializable {
 
         if(dic.dictionary.containsKey(input) ) {
 
-            dic.WriteDataToFile(input,"File/RecentWords.txt");
+            dic.WriteDataToFile(input,"File/RecentWords.txt","recent");
 
             button_star.setStyle("-fx-background-image: url('image/star_48px.png')");
             button_star.setDisable(false);
@@ -237,7 +237,7 @@ public class Show implements Initializable {
                    if(dic.yourWords.get(input) == false) {
 
                        dic.yourWords.replace(input,true);
-                       dic.WriteDataToFile(input,"File/YourWords.txt");
+                       dic.WriteDataToFile(input,"File/YourWords.txt","");
                        button_star.setStyle("-fx-background-image: url('image/star.png')");
                        tt_star.setText("Remove this from your words");
 
@@ -305,6 +305,7 @@ public class Show implements Initializable {
         window.setTitle("Update");
 
         UpdateWordController controller = (UpdateWordController) loader.getController();
+
         controller.setWord(word,meaning);
 
         // Lấy dữ liệu word thay đổi
@@ -313,8 +314,9 @@ public class Show implements Initializable {
          Text textWord  = new Text();
          Text textMeaning = new Text();
 
+         Text replace = new Text();
 
-         controller.Save(textWord,textMeaning);
+         controller.Save(textWord,textMeaning,dic,replace);
 
 
         Scene scene = new Scene(root,600,372);
@@ -324,7 +326,7 @@ public class Show implements Initializable {
         window.setResizable(false);
         window.initStyle(StageStyle.DECORATED);
 
-        window.show();
+        window.showAndWait();
 
         String w = textWord.getText();
         String m = textMeaning.getText();
@@ -338,45 +340,35 @@ public class Show implements Initializable {
 
                dic.yourWords.put(w, false);
 
-               dic.WriteDataToFile(word,"File/DeletedWords.txt");
-               dic.WriteDataToFile(wordToFile,"File/ChangedWords.txt");
+               dic.WriteDataToFile(word,"File/DeletedWords.txt","");
+               dic.WriteDataToFile(wordToFile,"File/ChangedWords.txt","");
                inputSearch.setText(w);
                InitContent(w);
            } else  if(message.equals("create")) {
 
-             if( dic.dictionary.containsKey(textWord.getText()) ) {
+               if( replace.getText().equals("yes") ) {
 
-                  Alert alert = createAlert("Warring", "Do you want replace this ?",
-                         "This has already on Dictionary");
+                   dic.dictionary.remove(word);
+                   dic.WriteDataToFile(word, "File/DeletedWords.txt","");
+
+                   dic.Put(w, "", m, "");
+                   dic.WriteDataToFile(wordToFile, "File/ChangedWords.txt","");
+
+                   InitContent(w);
+              }
 
 
-                  Optional<ButtonType> result = alert.showAndWait();
-
-                  if (result.get().getButtonData() == ButtonBar.ButtonData.YES) {
-
-
-                      dic.dictionary.remove(word);
-                      dic.WriteDataToFile(word,"File/DeletedWords.txt");
-
-                      dic.Put(w,"",m,"");
-                      dic.WriteDataToFile(wordToFile,"File/ChangedWords.txt");
-
-                      InitContent(w);
-                  } else if (result.get().getButtonData() == ButtonBar.ButtonData.NO)
-                      System.out.println("Code for no");
-
-               } else  {
+           } else  {
                   dic.Put(w,"m",m,"");
                   dic.yourWords.put(w,false);
-                  dic.WriteDataToFile(wordToFile,"File/NewWords.txt");
+                  dic.WriteDataToFile(wordToFile,"File/NewWords.txt","");
                   InitContent(w);
-               }
-
            }
 
         }
-
     }
+
+
 
     /**
      *  Tạo hộp thoại cảnh báo
@@ -402,7 +394,7 @@ public class Show implements Initializable {
 
     public void RemoveWord(String input) {
 
-        Alert alert = createAlert("Cofirmation","Do you want to remove this word ?",null);
+        Alert alert = createAlert("Cofirmation","Do you want to remove this word ?","");
 
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -410,7 +402,10 @@ public class Show implements Initializable {
 
             dic.dictionary.remove(input);
             dic.yourWords.remove(input);
-            dic.WriteDataToFile(input,"File/DeletedWords.txt");
+            dic.DeleteDataFromFile(input,"File/RecentWords.txt");
+            System.out.println(input);
+            dic.WriteDataToFile(input,"File/DeletedWords.txt","");
+
 
             inputSearch.setText(null);
             ScrollContent.setContent(null);
@@ -495,14 +490,14 @@ public class Show implements Initializable {
                     drawerShow.close();
                     inputSearch.setDisable(false);
 
-                    UpdateWord(null,null,"create");
+                    UpdateWord("","","create");
 
                     transition.setRate(transition.getRate() * -1);
                     transition.play();
 
                     listView.getItems().clear();
 
-                    
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -741,7 +736,7 @@ public class Show implements Initializable {
       transition.setRate(transition.getRate() * -1);
       transition.play();
 
-      if ( !list.isEmpty() ) {
+      if ( !list.isEmpty() && list != null) {
 
           for(String str : list) {
 
@@ -784,7 +779,7 @@ public class Show implements Initializable {
           }
 
 
-      }
+      } else ScrollContent.setContent(null);
 
   }
 
