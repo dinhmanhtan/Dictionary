@@ -245,12 +245,15 @@ public class DictionaryManagement extends Dictionary {
     public void InitNew_Changed_DeletedWords() {
 
         insertFromFile("File/NewWords.txt",false);
+
+        List<String> list = GetDataFromFile("File/DeletedWords.txt");
+
+        for(String s : list)
+            dictionary.remove(s);
+
+
         insertFromFile("File/ChangedWords.txt",true);
 
-         List<String> list = GetDataFromFile("File/DeletedWords.txt");
-
-         for(String s : list)
-             dictionary.remove(s);
 
 
      }

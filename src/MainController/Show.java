@@ -306,20 +306,20 @@ public class Show implements Initializable {
 
         UpdateWordController controller = (UpdateWordController) loader.getController();
 
-        controller.setWord(word,meaning);
+        controller.setWord(word, meaning);
 
         // Lấy dữ liệu word thay đổi
 
 
-         Text textWord  = new Text();
-         Text textMeaning = new Text();
+        Text textWord = new Text();
+        Text textMeaning = new Text();
 
-         Text replace = new Text();
+        Text replace = new Text();
 
-         controller.Save(textWord,textMeaning,dic,replace);
+        controller.Save(textWord, textMeaning, dic, replace);
 
 
-        Scene scene = new Scene(root,600,372);
+        Scene scene = new Scene(root, 600, 372);
         scene.getStylesheets().add(getClass().getResource("/UpdateWords/style.css").toExternalForm());
 
         window.setScene(scene);
@@ -331,43 +331,44 @@ public class Show implements Initializable {
         String w = textWord.getText();
         String m = textMeaning.getText();
         String wordToFile = "@" + w + '\n' + m;
-        if( !w.isEmpty() && !m.isEmpty() )  {
+        if (!w.isEmpty() && !m.isEmpty()) {
 
-           if( message.equals("reword")) {
+            if (message.equals("reword")) {
 
-               dic.dictionary.remove(word);
-               dic.Put(w,"",m,"");
+                if(replace.getText().equals("yes")) {
+                    dic.dictionary.remove(word);
+                    dic.Put(w, "", m, "");
 
-               dic.yourWords.put(w, false);
+                    dic.yourWords.put(w, false);
 
-               dic.WriteDataToFile(word,"File/DeletedWords.txt","");
-               dic.WriteDataToFile(wordToFile,"File/ChangedWords.txt","");
-               inputSearch.setText(w);
-               InitContent(w);
-           } else  if(message.equals("create")) {
+                    dic.WriteDataToFile(word, "File/DeletedWords.txt", "");
+                    dic.WriteDataToFile(wordToFile, "File/ChangedWords.txt", "");
+                    inputSearch.setText(w);
+                    InitContent(w);
+                }
+            } else if (message.equals("create")) {
 
-               if( replace.getText().equals("yes") ) {
+                if (replace.getText().equals("yes")) {
 
-                   dic.dictionary.remove(word);
-                   dic.WriteDataToFile(word, "File/DeletedWords.txt","");
+                    dic.dictionary.remove(word);
+                    dic.WriteDataToFile(word, "File/DeletedWords.txt", "");
 
-                   dic.Put(w, "", m, "");
-                   dic.WriteDataToFile(wordToFile, "File/ChangedWords.txt","");
+                    dic.Put(w, "", m, "");
+                    dic.WriteDataToFile(wordToFile, "File/ChangedWords.txt", "");
 
-                   InitContent(w);
-              }
+                    InitContent(w);
+                } else if (!dic.dictionary.containsKey(w)) {
+                    dic.Put(w, "m", m, "");
+                    dic.yourWords.put(w, false);
+                    dic.WriteDataToFile(wordToFile, "File/NewWords.txt", "");
+                    InitContent(w);
+                }
 
+            }
 
-           } else  {
-                  dic.Put(w,"m",m,"");
-                  dic.yourWords.put(w,false);
-                  dic.WriteDataToFile(wordToFile,"File/NewWords.txt","");
-                  InitContent(w);
-           }
 
         }
     }
-
 
 
     /**

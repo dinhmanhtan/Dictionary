@@ -28,7 +28,7 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        primaryStage.initStyle(StageStyle.DECORATED);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
 
         primaryStage.show();
     }
